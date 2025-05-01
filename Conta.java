@@ -8,6 +8,12 @@ public class Conta {
         this.saldo = saldo;
         this.cliente = cliente;
     }
+
+    public Conta(String numero, Cliente cliente) {
+        this.numero = numero;
+        this.saldo = 0.0;
+        this.cliente = cliente;
+    }
     
     public String getNumero() {
         return numero;
