@@ -10,6 +10,13 @@ public class Cliente {
         this.endereco = endereco;
         this.telefone = telefone;
     }
+
+    public Cliente(String nome) {
+        this.nome = null;
+        this.cpf = null;
+        this.endereco = null;
+        this.telefone = null;
+    }
     
     public String getNome() {
         return nome;
