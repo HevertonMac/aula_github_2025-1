@@ -61,25 +61,28 @@ public class Main {
     // --- MÉTODOS PARA CONTA ---
 
     private static void menuConta() {
-        Menu menu = new Menu("Menu Conta", Arrays.asList("Abrir Conta", "Listar Contas", "Voltar"));
+        Menu menu = new Menu("Menu Conta", Arrays.asList("Abrir Conta", "Listar Contas", "Excluir Conta", "Voltar"));
         boolean loop = true;
 
         while (loop) {
             int opcao = menu.getSelection();
 
-            switch (opcao) {
-                case 1:
-                    //abrirConta();
-                    break;
-                case 2:
-                    //listarContas();
-                    break;
-                case 3:
-                    loop = false;
-                    break;
-                default:
-                    System.out.println("Erro: opção inválida.");
-            }
+           switch (opcao) {
+    case 1:
+        // abrirConta();
+        break;
+    case 2:
+        // listarContas();
+        break;
+    case 3:
+        excluirConta();
+        break;
+    case 4:
+        loop = false;
+        break;
+    default:
+        System.out.println("Erro: opção inválida.");
+}
         }
     }
 
@@ -135,4 +138,21 @@ public class Main {
             System.out.println("Conta não encontrada.");
         }
     }
+    private static void excluirConta() {
+    System.out.print("Digite o número da conta a ser removida: ");
+    int numeroConta = scanner.nextInt();
+
+    Conta contaParaRemover = buscarContaPorNumero(numeroConta);
+
+    if (contaParaRemover != null) {
+        if (contaParaRemover.getSaldo() == 0) {
+            contas.remove(contaParaRemover);
+            System.out.println("Conta removida com sucesso.");
+        } else {
+            System.out.println("Não é possível remover a conta. Saldo diferente de zero.");
+        }
+    } else {
+        System.out.println("Conta não encontrada.");
+    }
+}
 }
