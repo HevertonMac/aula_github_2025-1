@@ -61,25 +61,28 @@ public class Main {
     // --- MÉTODOS PARA CONTA ---
 
     private static void menuConta() {
-        Menu menu = new Menu("Menu Conta", Arrays.asList("Abrir Conta", "Listar Contas", "Voltar"));
+        Menu menu = new Menu("Menu Conta", Arrays.asList("Abrir Conta", "Listar Contas", "Excluir Conta", "Voltar"));
         boolean loop = true;
 
         while (loop) {
             int opcao = menu.getSelection();
 
-            switch (opcao) {
-                case 1:
-                    //abrirConta();
-                    break;
-                case 2:
-                    //listarContas();
-                    break;
-                case 3:
-                    loop = false;
-                    break;
-                default:
-                    System.out.println("Erro: opção inválida.");
-            }
+           switch (opcao) {
+    case 1:
+        // abrirConta();
+        break;
+    case 2:
+        // listarContas();
+        break;
+    case 3:
+        excluirConta();
+        break;
+    case 4:
+        loop = false;
+        break;
+    default:
+        System.out.println("Erro: opção inválida.");
+}
         }
     }
 
@@ -88,9 +91,68 @@ public class Main {
 
     private static void menuOperacoes() {
         System.out.println("Funcionalidade de operações ainda não implementada.");
-        // Aqui você pode adicionar opções como:
-        // - Depositar em conta
-        // - Sacar da conta
-        // - Transferência
+         Menu menu = new Menu("Menu Operações", Arrays.asList("Depositar", "Sacar", "Transferir", "Consultar Saldo", "Voltar"));
+        boolean loop = true;
+
+        while (loop) {
+            int opcao = menu.getSelection();
+
+            switch (opcao) {
+                case 1:
+                    // depositar();
+                    break;
+                case 2:
+                    // sacar();
+                    break;
+                case 3:
+                    // transferir();
+                    break;
+                case 4:
+                    consultarSaldo();
+                    break;
+                case 5:
+                    loop = false;
+                    break;
+                default:
+                    System.out.println("Erro: opção inválida.");
+            }
+        }
     }
+    private static Conta buscarContaPorNumero(int numeroConta) {
+        for (Conta conta : contas) {
+            if (conta.getNumero() == numeroConta) {
+                return conta;
+            }
+        }
+        return null;
+    }
+    private static void consultarSaldo() {
+        System.out.print("Digite o número da conta: ");
+        int numeroConta = scanner.nextInt();
+
+        Conta conta = buscarContaPorNumero(numeroConta);
+
+        if (conta != null) {
+            System.out.println("Saldo atual: R$ " + conta.getSaldo());
+        } else {
+            System.out.println("Conta não encontrada.");
+        }
+    }
+    private static void excluirConta() {
+    System.out.print("Digite o número da conta a ser removida: ");
+    int numeroConta = scanner.nextInt();
+
+    Conta contaParaRemover = buscarContaPorNumero(numeroConta);
+
+    if (contaParaRemover != null) {
+        if (contaParaRemover.getSaldo() == 0) {
+            contas.remove(contaParaRemover);
+            System.out.println("Conta removida com sucesso.");
+        } else {
+            System.out.println("Não é possível remover a conta. Saldo diferente de zero.");
+        }
+    } else {
+        System.out.println("Conta não encontrada.");
+    }
+}
 }
