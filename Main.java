@@ -44,10 +44,10 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    //cadastrarCliente();
+                    cadastrarCliente();
                     break;
                 case 2:
-                    //listarClientes();
+                    listarClientes();
                     break;
                 case 3:
                     loop = false;
@@ -55,6 +55,40 @@ public class Main {
                 default:
                     System.out.println("Erro: opção inválida.");
             }
+        }
+    }
+
+    private static void cadastrarCliente() {
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("CPF: ");
+        String cpf = scanner.nextLine();
+
+        System.out.print("Endereço: ");
+        String endereco = scanner.nextLine();
+
+        System.out.print("Telefone: ");
+        String telefone = scanner.nextLine();
+
+        Cliente novoCliente = new Cliente(nome, cpf, endereco, telefone);
+        clientes.add(novoCliente);
+        System.out.println("Cliente cadastrado com sucesso!");
+    }
+
+    private static void listarClientes() {
+        if (clientes.isEmpty()) {
+            System.out.println("Nenhum cliente cadastrado.");
+            return;
+        }
+
+        System.out.println("Lista de Clientes:");
+        for (Cliente cliente : clientes) {
+            System.out.println("Nome: " + cliente.getNome());
+            System.out.println("CPF: " + cliente.getCpf());
+            System.out.println("Endereço: " + cliente.getEndereco());
+            System.out.println("Telefone: " + cliente.getTelefone());
+            System.out.println("--------------------------");
         }
     }
 
@@ -67,24 +101,65 @@ public class Main {
         while (loop) {
             int opcao = menu.getSelection();
 
-           switch (opcao) {
-    case 1:
-        // abrirConta();
-        break;
-    case 2:
-        // listarContas();
-        break;
-    case 3:
-        excluirConta();
-        break;
-    case 4:
-        loop = false;
-        break;
-    default:
-        System.out.println("Erro: opção inválida.");
-}
+            switch (opcao) {
+                case 1:
+                    abrirConta();
+                    break;
+                case 2:
+                    listarContas();
+                    break;
+                case 3:
+                    excluirConta();
+                    break;
+                case 4:
+                    loop = false;
+                    break;
+                default:
+                    System.out.println("Erro: opção inválida.");
+            }
         }
     }
+
+    private static void abrirConta() {
+        System.out.print("Digite o CPF do cliente: ");
+        String cpf = scanner.nextLine();
+    
+        Cliente cliente = null;
+        for (Cliente c : clientes) {
+            if (c.getCpf().equals(cpf)) {
+                cliente = c;
+                break;
+            }
+        }
+    
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado.");
+            return;
+        }
+    
+        System.out.print("Digite o número da nova conta: ");
+        String numero = scanner.nextLine();
+    
+        Conta novaConta = new Conta(numero, cliente);
+        contas.add(novaConta);
+        System.out.println("Conta criada com sucesso!");
+    }
+    
+    private static void listarContas() {
+        if (contas.isEmpty()) {
+            System.out.println("Nenhuma conta cadastrada.");
+            return;
+        }
+    
+        System.out.println("Lista de Contas:");
+        for (Conta conta : contas) {
+            System.out.println("Número da Conta: " + conta.getNumero());
+            System.out.println("Saldo: R$ " + conta.getSaldo());
+            System.out.println("Cliente: " + conta.getCliente().getNome());
+            System.out.println("--------------------------");
+        }
+    }
+    
 
 
     // --- MÉTODOS PARA OPERAÇÕES (EX: DEPÓSITO, SAQUE) ---
@@ -120,7 +195,7 @@ public class Main {
     }
     private static Conta buscarContaPorNumero(int numeroConta) {
         for (Conta conta : contas) {
-            if (conta.getNumero() == numeroConta) {
+            if (conta.getNumero().equals(numeroConta)) {
                 return conta;
             }
         }
