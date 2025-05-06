@@ -165,8 +165,7 @@ public class Main {
     // --- MÉTODOS PARA OPERAÇÕES (EX: DEPÓSITO, SAQUE) ---
 
     private static void menuOperacoes() {
-        System.out.println("Funcionalidade de operações ainda não implementada.");
-         Menu menu = new Menu("Menu Operações", Arrays.asList("Depositar", "Sacar", "Transferir", "Consultar Saldo", "Voltar"));
+        Menu menu = new Menu("Menu Operações", Arrays.asList("Depositar", "Sacar", "Transferir", "Consultar Saldo", "Voltar"));
         boolean loop = true;
 
         while (loop) {
