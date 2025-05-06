@@ -159,8 +159,6 @@ public class Main {
             System.out.println("--------------------------");
         }
     }
-    
-
 
     // --- MÉTODOS PARA OPERAÇÕES (EX: DEPÓSITO, SAQUE) ---
 
@@ -172,34 +170,95 @@ public class Main {
             int opcao = menu.getSelection();
 
             switch (opcao) {
-                case 1:
-                    // depositar();
-                    break;
-                case 2:
-                    // sacar();
-                    break;
-                case 3:
-                    // transferir();
-                    break;
-                case 4:
-                    consultarSaldo();
-                    break;
-                case 5:
-                    loop = false;
-                    break;
-                default:
-                    System.out.println("Erro: opção inválida.");
+                case 1 -> depositar();
+                case 2 -> sacar();
+                case 3 -> transferir();
+                case 4 -> consultarSaldo();
+                case 5 -> loop = false;
+                default -> System.out.println("Erro: opção inválida.");
             }
         }
     }
-    private static Conta buscarContaPorNumero(int numeroConta) {
-        for (Conta conta : contas) {
-            if (conta.getNumero().equals(numeroConta)) {
-                return conta;
+
+    private static void depositar() {
+        System.out.print("Digite o número da conta para depósito: ");
+        int numeroConta = scanner.nextInt();
+    
+        Conta conta = buscarContaPorNumero(numeroConta);
+    
+        if (conta != null) {
+            System.out.print("Digite o valor a ser depositado: R$ ");
+            double valor = scanner.nextDouble();
+            scanner.nextLine();
+    
+            if (valor > 0) {
+                conta.setSaldo(conta.getSaldo() + valor);
+                System.out.println("Depósito de R$ " + valor + " realizado com sucesso.");
+            } else {
+                System.out.println("Valor de depósito inválido.");
             }
+        } else {
+            System.out.println("Conta não encontrada.");
         }
-        return null;
     }
+    
+
+    private static void sacar() {
+        System.out.print("Digite o número da conta para saque: ");
+        int numeroConta = scanner.nextInt();
+    
+        Conta conta = buscarContaPorNumero(numeroConta);
+    
+        if (conta != null) {
+            System.out.print("Digite o valor a ser sacado: R$ ");
+            double valor = scanner.nextDouble();
+            scanner.nextLine();
+    
+            if (valor > 0 && valor <= conta.getSaldo()) {
+                conta.setSaldo(conta.getSaldo() - valor);
+                System.out.println("Saque de R$ " + valor + " realizado com sucesso.");
+            } else {
+                System.out.println("Saldo insuficiente ou valor inválido.");
+            }
+        } else {
+            System.out.println("Conta não encontrada.");
+        }
+    }
+    
+
+    private static void transferir() {
+        System.out.print("Digite o número da conta de origem: ");
+        int numeroContaOrigem = scanner.nextInt();
+    
+        Conta contaOrigem = buscarContaPorNumero(numeroContaOrigem);
+    
+        if (contaOrigem != null) {
+            System.out.print("Digite o número da conta de destino: ");
+            int numeroContaDestino = scanner.nextInt();
+    
+            Conta contaDestino = buscarContaPorNumero(numeroContaDestino);
+    
+            if (contaDestino != null) {
+                System.out.print("Digite o valor a ser transferido: R$ ");
+                double valor = scanner.nextDouble();
+                scanner.nextLine();
+    
+                if (valor > 0 && valor <= contaOrigem.getSaldo()) {
+                    contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
+                    contaDestino.setSaldo(contaDestino.getSaldo() + valor);
+                    System.out.println("Transferência de R$ " + valor + " realizada com sucesso.");
+                } else {
+                    System.out.println("Saldo insuficiente ou valor inválido.");
+                }
+            } else {
+                System.out.println("Conta de destino não encontrada.");
+            }
+        } else {
+            System.out.println("Conta de origem não encontrada.");
+        }
+    }
+    
+
     private static void consultarSaldo() {
         System.out.print("Digite o número da conta: ");
         int numeroConta = scanner.nextInt();
@@ -211,7 +270,19 @@ public class Main {
         } else {
             System.out.println("Conta não encontrada.");
         }
+    }    
+
+    // FIM MÉTODO OPERÇÕES
+
+    private static Conta buscarContaPorNumero(int numeroConta) {
+        for (Conta conta : contas) {
+            if (conta.getNumero().equals(numeroConta)) {
+                return conta;
+            }
+        }
+        return null;
     }
+    
     private static void excluirConta() {
     System.out.print("Digite o número da conta a ser removida: ");
     int numeroConta = scanner.nextInt();
